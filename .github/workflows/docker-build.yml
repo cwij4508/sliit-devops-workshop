@@ -1,0 +1,28 @@
+name: Build Docker Image
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Build Docker image
+      run: |
+        cd 01-docker
+        docker build -t sliit-workshop-app .
+        
+    - name: Test Docker image
+      run: |
+        docker run -d -p 3000:3000 --name test-app sliit-workshop-app
+        sleep 5
+        curl -f http://localhost:3000 || exit 1
+        docker stop test-app
+        docker rm test-app

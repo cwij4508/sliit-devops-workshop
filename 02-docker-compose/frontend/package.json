@@ -1,0 +1,15 @@
+{
+  "name": "sliit-frontend",
+  "version": "1.0.0",
+  "description": "Frontend service for Docker Compose workshop",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.4.0"
+  },
+  "author": "SLIIT DevOps Workshop",
+  "license": "MIT"
+}
