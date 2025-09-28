@@ -44,31 +44,31 @@ app.post('/api/calculate', (req, res) => {
   
   let result;
   switch (operation) {
-    case 'add':
-      result = a + b;
-      break;
-    case 'subtract':
-      result = a - b;
-      break;
-    case 'multiply':
-      result = a * b;
-      break;
-    case 'divide':
-      if (b === 0) {
-        return res.status(400).json({ error: 'Division by zero' });
-      }
-      result = a / b;
-      break;
-    default:
-      return res.status(400).json({ error: 'Invalid operation' });
+  case 'add':
+    result = a + b;
+    break;
+  case 'subtract':
+    result = a - b;
+    break;
+  case 'multiply':
+    result = a * b;
+    break;
+  case 'divide':
+    if (b === 0) {
+      return res.status(400).json({ error: 'Division by zero' });
+    }
+    result = a / b;
+    break;
+  default:
+    return res.status(400).json({ error: 'Invalid operation' });
   }
   
   res.json({ result, operation, a, b });
 });
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
+app.use((err, req, res, _next) => {
+  console.error(err.stack); // eslint-disable-line no-console
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
@@ -78,7 +78,7 @@ app.use('*', (req, res) => {
 });
 
 const server = app.listen(port, () => {
-  console.log(`🚀 Server running on port ${port}`);
+  console.log(`🚀 Server running on port ${port}`); // eslint-disable-line no-console
 });
 
 module.exports = { app, server };
