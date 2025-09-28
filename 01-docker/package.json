@@ -1,0 +1,14 @@
+{
+  "name": "sliit-docker-workshop",
+  "version": "1.0.0",
+  "description": "Simple Node.js app for Docker workshop",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "author": "SLIIT DevOps Workshop",
+  "license": "MIT"
+}

@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Frontend Service
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=http://backend:3001
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # Backend API Service
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=production
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  # Redis Database
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - app-network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app-network
+
+# Named volumes for data persistence
+volumes:
+  redis-data:
+
+# Custom network for inter-service communication
+networks:
+  app-network:
+    driver: bridge
